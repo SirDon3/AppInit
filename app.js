@@ -1,14 +1,38 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const Blog = require('./models/blog');
 
 
 // express app
 const app = express(); 
 
+//connect to mongodb
+const dbURI = 'mongodb+srv://sirdon3blogs:test1234@cluster0.chsiogn.mongodb.net/node-blog?retryWrites=true&w=majority';
+mongoose.connect(dbURI)
+    .then((result) => app.listen(3000))
+    .catch((err) => console.log(err));
+
 // register view engine 
 app.set('view engine', 'ejs')
 
-// listen for requests 
-app.listen(3000);
+// Static middleware
+app.use(express.static('public'));
+
+app.get('/add', (req, res) => {
+
+    const blog = new Blog({
+        title: 'Whats good pt2',
+        snippet: 'Try new things',
+        body: 'More about new things'
+    });
+
+    blog.save()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => console.log(err));
+
+});
 
 // routes
 app.get('/', (req, res) => {
