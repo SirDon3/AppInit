@@ -19,21 +19,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/add', (req, res) => {
 
-    const blog = new Blog({
-        title: 'Whats good pt4',
-        snippet: 'Try new things',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-    });
-
-    blog.save()
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => console.log(err));
-
-});
 
 // Routes
 app.get('/', (req, res) => {
